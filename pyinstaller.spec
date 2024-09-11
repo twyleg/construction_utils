@@ -2,7 +2,7 @@
 from PyInstaller.utils.hooks import collect_data_files
 
 datas = []
-datas += collect_data_files('template_project_python')
+datas += collect_data_files('construction_meta_data_builder')
 
 
 a = Analysis(

@@ -14,7 +14,7 @@ def read_long_description() -> str:
 
 # fmt: off
 setup(
-    name="template_project_python",
+    name="construction_meta_data_builder",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     author="Torsten Wylegala",
@@ -22,7 +22,7 @@ setup(
     description="",
     license="GPL 3.0",
     keywords="",
-    url="https://github.com/twyleg/template_project_python",
+    url="https://github.com/twyleg/construction_meta_data_builder",
     packages=find_packages(),
     long_description=read_long_description(),
     long_description_content_type="text/markdown",
@@ -32,7 +32,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "template_project_python = template_project_python.main:main",
+            "construction_meta_data_builder = construction_meta_data_builder.main:main",
         ]
     },
 )

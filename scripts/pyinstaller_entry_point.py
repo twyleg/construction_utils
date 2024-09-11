@@ -1,5 +1,5 @@
 # Copyright (C) 2024 twyleg
-from template_project_python.main import main
+from construction_meta_data_builder.main import main
 
 #
 # This separate entry point is necessary to make pyinstaller pick up the sdist package instead of the locally available

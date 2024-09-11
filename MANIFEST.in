@@ -1,9 +1,9 @@
 include README.md
 include LICENSE
 include requirements.txt
-graft template_project_python
+graft construction_meta_data_builder
 recursive-exclude * *.py[co]
 include versioneer.py
-include template_project_python/py.typed
-include template_project_python/_version.py
-include template_project_python/resources/*.txt
+include construction_meta_data_builder/py.typed
+include construction_meta_data_builder/_version.py
+include construction_meta_data_builder/resources/*.txt

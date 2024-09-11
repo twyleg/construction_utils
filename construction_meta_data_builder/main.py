@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 from simple_python_app.generic_application import GenericApplication
 
-from template_project_python import __version__
+from construction_meta_data_builder import __version__
 
 
 FILE_DIR = Path(__file__).parent
@@ -15,7 +15,7 @@ class Application(GenericApplication):
     def __init__(self):
         # fmt: off
         super().__init__(
-            application_name="template_project_python",
+            application_name="construction_meta_data_builder",
             version=__version__,
             application_config_schema_filepath=FILE_DIR / "resources/application_config_schema.json"
         )
@@ -31,6 +31,7 @@ class Application(GenericApplication):
         self.logm.debug("run()")
 
         self.logm.info("Config: %s", self.application_config)
+        self.logm.info("cwd: %s", Path.cwd())
 
 
 def main() -> None:
