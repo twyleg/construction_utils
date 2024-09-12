@@ -11,5 +11,6 @@ pyinstaller~=6.10.0
 pyyaml~=6.0.2
 types-PyYAML~=6.0.12.20240808
 simple-python-app
+jinja2~=3.1.4
 
 template-project-utils~=0.1.0

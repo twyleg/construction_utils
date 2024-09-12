@@ -2,7 +2,8 @@
     "name": "Construction A",
     "tags": [
         "construction",
-        "a"
+        "a",
+        "foo bar"
     ],
     "thingiverse_id": 0,
     "thingiverse_creator": "creator",
