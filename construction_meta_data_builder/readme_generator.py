@@ -51,6 +51,7 @@ class Construction:
         for source_file_filepath in source_files_filepaths:
             subprocess.run([
                 "xvfb-run",
+                "-a",
                 "freecad",
                 "-u",
                 FILE_DIR / "resources/freecad_no_splash_user.cfg",
