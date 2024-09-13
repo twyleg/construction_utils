@@ -1,37 +1,41 @@
-# {{ name }}
+# {{ construction.things_data["name"] }}
 
-{%- for tag in tags %}
+{%- for tag in construction.tags %}
 [![{{ tag }}](https://img.shields.io/badge/{{ tag.replace(" ", "_") }}-024c73)](https://www.thingiverse.com/tag:{{ tag.replace(" ", "_") }})
 {%- endfor %}
 
-[https://www.thingiverse.com/thing:{{ thingiverse_id }}](https://www.thingiverse.com/thing:{{ file_gcode }})
+[https://www.thingiverse.com/thing:{{ construction.things_data["thingiverse_id"] }}](https://www.thingiverse.com/thing:{{ construction.things_data["thingiverse_id"] }})
 
 
 {{ description }}
 
-![thumbnail image]({{ thumbnail_image}})
+![thumbnail image]({{ construction.filepath_thumbnail_image}})
 
 ## Images
 
-{%- for file_image in files_images %}
+{%- for file_image in construction.filepaths_img %}
 [<img src="{{ file_image }}" alt="{{ file_image }}" width="200"/>]({{ file_image }})
 {%- endfor %}
 
 ## Source - Files
 
-{%- for file_source in files_source %}
+{%- for file_source in construction.filepaths_source %}
 * [{{ file_source }}]({{ file_source }})
+{%- endfor %}
+
+{%- for file_source_export in construction.filepaths_source_export %}
+[<img src="{{ file_source_export }}" alt="{{ file_source_export }}" width="200"/>]({{ file_source_export }})
 {%- endfor %}
 
 ## 3D - Files
 
-{%- for file_three_dimensional in files_three_dimensionals %}
+{%- for file_three_dimensional in construction.filepaths_3d %}
 * [{{ file_three_dimensional }}]({{ file_three_dimensional }})
 {%- endfor %}
 
 ## GCode - Files
 
-{%- for file_gcode in file_gcode %}
+{%- for file_gcode in construction.filepaths_gcode %}
 * [{{ file_gcode }}]({{ file_gcode }})
 {%- else %}
 NONE

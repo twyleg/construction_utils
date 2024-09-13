@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 
 from construction_meta_data_builder.main import Application
-from construction_meta_data_builder.readme_generator import Construction, ConstructionReadmeGenerator
+from construction_meta_data_builder.readme_generator import Construction, ConstructionReadmeGenerator, Workspace, WorkspaceReadmeGenerator
 
 #
 # General naming convention for unit tests:
@@ -65,3 +65,13 @@ class TestConstructionReadmeGenerator:
         construction = Construction(construction_dir)
         construction_readme_generator = ConstructionReadmeGenerator(construction)
         construction_readme_generator.generate(workspace / "construction_a")
+
+
+class TestWorkspaceReadmeGenerator:
+    def test_ValidConstructionWorkspace_GenerateWorkspaceReadme_ReadmeGenerated(self, caplog, workspace, valid_config_file):
+        construction_workspace = Workspace(workspace)
+        construction_workspace_readme_generator = WorkspaceReadmeGenerator(construction_workspace)
+        construction_workspace_readme_generator.generate(workspace)
+        for construction in construction_workspace.constructions:
+            print(construction.construction_dir_path)
+

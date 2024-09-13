@@ -1,0 +1,27 @@
+# Constructions
+
+<div style="line-height:200%;S">
+<table>
+  <tr>
+    <th>Construction</th>
+    <th>Preview</th>
+  </tr>
+{%- for construction in workspace.constructions %}
+  <tr>
+    <td>
+        <b>Name:</b> <a href="{{ construction.construction_relative_dir_path }}">{{ construction.things_data["name"] }}</a></br>
+        <b>Description:</b> {{ construction.things_data["thingiverse_description"] }}</br>
+        <b>Tags:</b>
+        <ul>
+        {%- for tag in construction.things_data["tags"] %}
+            <li><a href="https://www.thingiverse.com/tag:{{ tag.replace(" ", "_") }}"><img src="https://img.shields.io/badge/{{ tag.replace(" ", "_") }}-024c73" alt="{{ tag }}"/></a></li>
+        {%- endfor %}
+        </ul>
+    </td>
+    <td>
+        <a href="{{ construction.construction_relative_dir_path }}/{{ construction.filepath_thumbnail_image }}"><img src="{{ construction.construction_relative_dir_path }}/{{ construction.filepath_thumbnail_image }}" alt="{{ construction.construction_relative_dir_path }}/{{ construction.filepath_thumbnail_image }}" width="400"/></a>
+    </td>
+  </tr>
+{%- endfor %}
+</table>
+</div>

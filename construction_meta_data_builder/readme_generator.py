@@ -1,13 +1,15 @@
 # Copyright (C) 2024 twyleg
 import json
+import shutil
+import subprocess
 from pathlib import Path
 from glob import glob
 from typing import List, Dict, Any
-
-import jinja2
+from os import listdir
 from jinja2 import FileSystemLoader, Environment
 
 FILE_DIR = Path(__file__).parent
+
 
 class Construction:
 
@@ -25,12 +27,14 @@ class Construction:
 
     def __init__(self, construction_dir_path: Path):
         self.construction_dir_path = construction_dir_path
+        self.construction_relative_dir_path = construction_dir_path.relative_to(construction_dir_path.parent)
         self.things_data: Dict[str, Any] = self.__read_things_file()
         self.filepaths_source: List[Path] = self.__read_filepaths_source()
+        self.filepaths_source_export: List[Path] = self.__generate_filepaths_source_export()
         self.filepaths_img: List[Path] = self.__read_filepaths_img()
         self.filepaths_3d: List[Path] = self.__read_filepaths_3d()
         self.filepaths_gcode: List[Path] = self.__read_filepaths_gcode()
-        self.thumbnail_image_relative_path = self.filepaths_img[0]
+        self.filepath_thumbnail_image = self.filepaths_img[0]
 
     def __find_files_by_extension_and_return_relative_path(self, dir: Path, extensions: List[str]) -> List[Path]:
         files: List[str] = []
@@ -42,6 +46,15 @@ class Construction:
         things_file_filepath = self.construction_dir_path / self.FILENAME_THINGS_FILE
         with open(things_file_filepath, 'r') as json_file:
             return json.load(json_file)
+
+    def __generate_filepaths_source_export(self):
+        export_image_filepaths: List[Path] = []
+        for filepath_source in self.filepaths_source:
+            subprocess.run(["freecad", self.construction_dir_path / filepath_source, FILE_DIR / "resources/freecad_export_image.py"])
+            export_image_filepath = self.construction_dir_path / self.SUBDIR_NAME_SOURCE / f"{filepath_source.stem}.png"
+            shutil.move(Path.cwd() / "screenshot.png", export_image_filepath)
+            export_image_filepaths.append(export_image_filepath)
+        return export_image_filepaths
 
     def __read_filepaths_source(self) -> List[Path]:
         return self.__find_files_by_extension_and_return_relative_path(self.construction_dir_path / self.SUBDIR_NAME_SOURCE,
@@ -59,6 +72,38 @@ class Construction:
         return self.__find_files_by_extension_and_return_relative_path(self.construction_dir_path / self.SUBDIR_NAME_GCODE,
                                                                        self.FILE_EXTENSIONS_GCODE)
 
+
+class Workspace:
+    def __init__(self, workspace_dir_path: Path):
+        self.workspace_dir_path = workspace_dir_path
+        self.constructions = self.__find_constructions()
+
+    def __find_constructions(self) -> List[Construction]:
+        workspace_element_paths = [self.workspace_dir_path / elem for elem in listdir(self.workspace_dir_path)]
+        workspace_element_paths.sort()
+        constructions: List[Construction] = []
+        for workspace_element_path in workspace_element_paths:
+            if workspace_element_path.is_dir() and (workspace_element_path / "things.json").exists():
+                constructions.append(Construction(workspace_element_path))
+        return constructions
+
+
+class WorkspaceReadmeGenerator:
+
+    def __init__(self, workspace: Workspace):
+        self._workspace = workspace
+
+    def generate(self, output_dir: Path):
+        environment = Environment(loader=FileSystemLoader(FILE_DIR / "resources"))
+        template = environment.get_template("template_workspace_readme.md.jinja")
+        content = template.render(
+            workspace=self._workspace
+        )
+
+        with open(output_dir / "README.md", mode="w", encoding="utf-8") as readme_file:
+            readme_file.write(content)
+
+
 class ConstructionReadmeGenerator:
 
     def __init__(self, construction: Construction):
@@ -68,15 +113,7 @@ class ConstructionReadmeGenerator:
         environment = Environment(loader=FileSystemLoader(FILE_DIR / "resources"))
         template = environment.get_template("template_construction_readme.md.jinja")
         content = template.render(
-            name=self._construction.things_data["name"],
-            thingiverse_id=self._construction.things_data["thingiverse_id"],
-            description=self._construction.things_data["thingiverse_description"],
-            tags=self._construction.things_data["tags"],
-            thumbnail_image=self._construction.thumbnail_image_relative_path,
-            files_source=self._construction.filepaths_source,
-            files_images=self._construction.filepaths_img,
-            files_three_dimensionals=self._construction.filepaths_3d,
-            files_gcode=self._construction.filepaths_gcode
+            construction=self._construction
         )
 
         with open(output_dir / "README.md", mode="w", encoding="utf-8") as readme_file:

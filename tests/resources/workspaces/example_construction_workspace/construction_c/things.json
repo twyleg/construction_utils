@@ -1,0 +1,16 @@
+{
+    "name": "Construction C",
+    "tags": [
+        "construction",
+        "c",
+        "foo bar"
+    ],
+    "thingiverse_id": 0,
+    "thingiverse_creator": "creator",
+    "thingiverse_is_wip": true,
+    "thingiverse_license": "cc",
+    "thingiverse_category": "3D Printer Parts",
+    "thingiverse_is_published": true,
+    "thingiverse_description": "This is a description of the construction.",
+    "thingiverse_instructions": "These are instructions on how to create this construction."
+}
