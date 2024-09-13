@@ -8,6 +8,12 @@
 
 Ipsum Lorem
 
+## Dependencies
+
+To run freecad headless, the following packages need to be installed
+
+* xvfb
+
 ## Prerequisites
 
 Add the following secrets for GitHub Actions:

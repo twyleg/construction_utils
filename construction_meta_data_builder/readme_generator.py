@@ -4,7 +4,7 @@ import shutil
 import subprocess
 from pathlib import Path
 from glob import glob
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
 from os import listdir
 from jinja2 import FileSystemLoader, Environment
 
@@ -29,8 +29,7 @@ class Construction:
         self.construction_dir_path = construction_dir_path
         self.construction_relative_dir_path = construction_dir_path.relative_to(construction_dir_path.parent)
         self.things_data: Dict[str, Any] = self.__read_things_file()
-        self.filepaths_source: List[Path] = self.__read_filepaths_source()
-        self.filepaths_source_export: List[Path] = self.__generate_filepaths_source_export()
+        self.filepaths_source: List[Tuple[Path, Path]] = self.__read_filepaths_source()
         self.filepaths_img: List[Path] = self.__read_filepaths_img()
         self.filepaths_3d: List[Path] = self.__read_filepaths_3d()
         self.filepaths_gcode: List[Path] = self.__read_filepaths_gcode()
@@ -47,18 +46,30 @@ class Construction:
         with open(things_file_filepath, 'r') as json_file:
             return json.load(json_file)
 
-    def __generate_filepaths_source_export(self):
+    def __generate_source_files_preview_images(self, source_files_filepaths: List[Path]) -> List[Path]:
         export_image_filepaths: List[Path] = []
-        for filepath_source in self.filepaths_source:
-            subprocess.run(["freecad", self.construction_dir_path / filepath_source, FILE_DIR / "resources/freecad_export_image.py"])
-            export_image_filepath = self.construction_dir_path / self.SUBDIR_NAME_SOURCE / f"{filepath_source.stem}.png"
-            shutil.move(Path.cwd() / "screenshot.png", export_image_filepath)
-            export_image_filepaths.append(export_image_filepath)
+        for source_file_filepath in source_files_filepaths:
+            subprocess.run([
+                "xvfb-run",
+                "freecad",
+                "-u",
+                FILE_DIR / "resources/freecad_no_splash_user.cfg",
+                self.construction_dir_path / source_file_filepath,
+                FILE_DIR / "resources/freecad_export_image.py"
+            ])
+            export_image_filepath = self.construction_dir_path / self.SUBDIR_NAME_SOURCE / f"{source_file_filepath.stem}.png"
+            shutil.move(Path.cwd() / "image.png", export_image_filepath)
+            export_image_filepaths.append(export_image_filepath.relative_to(self.construction_dir_path))
         return export_image_filepaths
 
-    def __read_filepaths_source(self) -> List[Path]:
-        return self.__find_files_by_extension_and_return_relative_path(self.construction_dir_path / self.SUBDIR_NAME_SOURCE,
-                                                                       self.FILE_EXTENSIONS_SOURCE)
+    def __read_filepaths_source(self) -> List[Tuple[Path, Path]]:
+        source_files_filepaths = self.__find_files_by_extension_and_return_relative_path(self.construction_dir_path / self.SUBDIR_NAME_SOURCE,
+                                                                self.FILE_EXTENSIONS_SOURCE)
+        source_file_preview_images_filepaths = self.__generate_source_files_preview_images(source_files_filepaths)
+
+        source_files_filepaths.sort()
+        source_file_preview_images_filepaths.sort()
+        return [(source_file_filepath, source_file_preview_image_filepath) for source_file_filepath, source_file_preview_image_filepath in zip(source_files_filepaths, source_file_preview_images_filepaths)]
 
     def __read_filepaths_img(self) -> List[Path]:
         return self.__find_files_by_extension_and_return_relative_path(self.construction_dir_path / self.SUBDIR_NAME_IMG,

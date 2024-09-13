@@ -44,7 +44,7 @@ def valid_config_file(tmp_path):
 
 
 class TestConstructionReader:
-    def test_ValidConstructionProject_ReadConstruction_ConstructionReadSuccessfully(self, caplog, workspace, valid_config_file):
+    def test_ValidConstruction_ReadConstruction_ConstructionReadSuccessfully(self, caplog, workspace, valid_config_file):
         construction = Construction(workspace / "construction_a")
 
         assert construction.things_data["name"] == "Construction A"

@@ -19,13 +19,22 @@
 
 ## Source - Files
 
+<table>
+  <tr>
+    <th>Source file</th>
+    <th>Preview</th>
+  </tr>
 {%- for file_source in construction.filepaths_source %}
-* [{{ file_source }}]({{ file_source }})
+  <tr>
+    <td>
+        <a href="{{ file_source[0] }}">{{ file_source[0] }}</a>
+    </td>
+    <td>
+        <img src="{{ file_source[1] }}" alt="{{ file_source[1] }}" width="200"/>
+    </td>
+  </tr>
 {%- endfor %}
-
-{%- for file_source_export in construction.filepaths_source_export %}
-[<img src="{{ file_source_export }}" alt="{{ file_source_export }}" width="200"/>]({{ file_source_export }})
-{%- endfor %}
+</table>
 
 ## 3D - Files
 
