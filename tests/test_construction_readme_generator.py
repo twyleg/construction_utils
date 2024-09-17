@@ -45,7 +45,7 @@ class TestConstructionReader:
         assert len(construction.filepaths_source) == 3
         assert len(construction.filepaths_img) == 3
         assert len(construction.filepaths_3d) == 3
-        assert len(construction.filepaths_gcode) == 0
+        assert len(construction.filepaths_gcode) == 1
 
 
 class TestConstructionReadmeGenerator:
