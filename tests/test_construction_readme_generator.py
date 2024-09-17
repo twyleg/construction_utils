@@ -63,4 +63,3 @@ class TestWorkspaceReadmeGenerator:
         construction_workspace_readme_generator.generate()
         for construction in construction_workspace.constructions:
             print(construction.construction_dir_path)
-

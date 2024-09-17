@@ -15,7 +15,7 @@ class FreecadExporter:
 
     MODIFICATION_TIME_REQUIRED_DELTA = 2.0
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._export_jobs: List[Tuple[Path, Path | None]] = []
 
     @staticmethod
@@ -78,6 +78,3 @@ class FreecadExporter:
                 logm.exception(e)
         else:
             logm.info("No FreeCAD export jobs available.")
-
-
-

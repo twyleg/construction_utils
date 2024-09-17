@@ -29,11 +29,12 @@ Examples:
         -source/example_1.FCStd -> output_1/example_1.png
         -source/example_2.FCStd -> output_2/example_output_2.png
 """
+
 import sys
 from typing import List, Tuple, Union
 
-import FreeCADGui as Gui
-import FreeCAD
+import FreeCADGui as Gui  # type: ignore
+import FreeCAD  # type: ignore
 
 from pathlib import Path
 
@@ -93,4 +94,4 @@ for input_output_file_path_pair in input_output_file_path_pairs:
 
     FreeCAD.closeDocument(doc.Name)
 
-Gui.doCommand('exit()')
+Gui.doCommand("exit()")
