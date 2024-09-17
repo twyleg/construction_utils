@@ -5,6 +5,7 @@ from pathlib import Path
 from simple_python_app.generic_application import GenericApplication
 
 from construction_meta_data_builder import __version__
+from construction_meta_data_builder.readme_generator import generate_readmes_for_workspace
 
 
 FILE_DIR = Path(__file__).parent
@@ -17,21 +18,16 @@ class Application(GenericApplication):
         super().__init__(
             application_name="construction_meta_data_builder",
             version=__version__,
-            application_config_schema_filepath=FILE_DIR / "resources/application_config_schema.json"
+            application_config_init_enabled=False,
+            logging_logfile_output_dir=Path.cwd() / ".logs/"
         )
         # fmt: on
 
     def add_arguments(self, argparser: argparse.ArgumentParser):
-        self.logm.info("init_argparse()")
-
-        argparser.add_argument("--example", type=str, default=None, help="Example")
+        pass
 
     def run(self, args: argparse.Namespace):
-        self.logm.info("run()")
-        self.logm.debug("run()")
-
-        self.logm.info("Config: %s", self.application_config)
-        self.logm.info("cwd: %s", Path.cwd())
+        generate_readmes_for_workspace(Path.cwd())
 
 
 def main() -> None:

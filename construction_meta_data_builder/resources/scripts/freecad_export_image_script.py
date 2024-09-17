@@ -86,7 +86,7 @@ for input_output_file_path_pair in input_output_file_path_pairs:
     doc = FreeCAD.openDocument(str(input_file_path))
 
     Gui.SendMsgToActiveView("OrthographicCamera")
-    Gui.SendMsgToActiveView("ViewIsometric")
+    Gui.SendMsgToActiveView("ViewAxo")
 
     view = Gui.ActiveDocument.ActiveView
     view.saveImage(str(output_file_path), 1000, 1000, "White")

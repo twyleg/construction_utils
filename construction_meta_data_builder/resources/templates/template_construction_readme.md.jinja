@@ -1,15 +1,16 @@
 # {{ construction.things_data["name"] }}
 
-{%- for tag in construction.tags %}
+{%- for tag in construction.things_data["tags"] %}
 [![{{ tag }}](https://img.shields.io/badge/{{ tag.replace(" ", "_") }}-024c73)](https://www.thingiverse.com/tag:{{ tag.replace(" ", "_") }})
 {%- endfor %}
 
 [https://www.thingiverse.com/thing:{{ construction.things_data["thingiverse_id"] }}](https://www.thingiverse.com/thing:{{ construction.things_data["thingiverse_id"] }})
 
-
-{{ description }}
-
+{% if construction.filepath_thumbnail_image %}
 ![thumbnail image]({{ construction.filepath_thumbnail_image}})
+{% endif %}
+
+{{ construction.things_data["thingiverse_description"] }}
 
 ## Images
 

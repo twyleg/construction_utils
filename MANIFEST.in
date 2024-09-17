@@ -6,4 +6,5 @@ recursive-exclude * *.py[co]
 include versioneer.py
 include construction_meta_data_builder/py.typed
 include construction_meta_data_builder/_version.py
-include construction_meta_data_builder/resources/*.txt
+include construction_meta_data_builder/resources/scripts/*.py
+include construction_meta_data_builder/resources/templates/*.jinja

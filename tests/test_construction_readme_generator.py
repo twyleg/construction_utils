@@ -6,8 +6,7 @@ import pytest
 import logging
 from pathlib import Path
 
-from construction_meta_data_builder.main import Application
-from construction_meta_data_builder.readme_generator import Construction, ConstructionReadmeGenerator, Workspace, WorkspaceReadmeGenerator
+from construction_meta_data_builder.readme_generator import Construction, Workspace, ConstructionReadmeGenerator, WorkspaceReadmeGenerator
 
 #
 # General naming convention for unit tests:
@@ -33,18 +32,8 @@ def workspace(tmp_path, monkeypatch):
     return dst_workspace_filepath
 
 
-@pytest.fixture()
-def valid_config_file(tmp_path):
-    config_template_filepath = FILE_DIR / "resources/configs/valid_construction_meta_data_builder_config.json"
-    dst_workspace_filepath = tmp_path / "construction_workspace"
-    dst_workspace_filepath.mkdir(exist_ok=True)
-    dst_config_filepath = dst_workspace_filepath / "construction_meta_data_builder_config.json"
-    shutil.copy(config_template_filepath, dst_config_filepath)
-    return dst_config_filepath
-
-
 class TestConstructionReader:
-    def test_ValidConstruction_ReadConstruction_ConstructionReadSuccessfully(self, caplog, workspace, valid_config_file):
+    def test_ValidConstruction_ReadConstruction_ConstructionReadSuccessfully(self, caplog, workspace):
         construction = Construction(workspace / "construction_a")
 
         assert construction.things_data["name"] == "Construction A"
@@ -60,18 +49,18 @@ class TestConstructionReader:
 
 
 class TestConstructionReadmeGenerator:
-    def test_ValidConstructionWorkspace_GenerateConstructionReadme_ReadmeGenerated(self, caplog, workspace, valid_config_file):
+    def test_ValidConstructionWorkspace_GenerateConstructionReadme_ReadmeGenerated(self, caplog, workspace):
         construction_dir = workspace / "construction_a"
         construction = Construction(construction_dir)
         construction_readme_generator = ConstructionReadmeGenerator(construction)
-        construction_readme_generator.generate(workspace / "construction_a")
+        construction_readme_generator.generate()
 
 
 class TestWorkspaceReadmeGenerator:
-    def test_ValidConstructionWorkspace_GenerateWorkspaceReadme_ReadmeGenerated(self, caplog, workspace, valid_config_file):
+    def test_ValidConstructionWorkspace_GenerateWorkspaceReadme_ReadmeGenerated(self, caplog, workspace):
         construction_workspace = Workspace(workspace)
         construction_workspace_readme_generator = WorkspaceReadmeGenerator(construction_workspace)
-        construction_workspace_readme_generator.generate(workspace)
+        construction_workspace_readme_generator.generate()
         for construction in construction_workspace.constructions:
             print(construction.construction_dir_path)
 

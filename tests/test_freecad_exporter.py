@@ -25,7 +25,7 @@ class TestConstructionReadmeGenerator:
     def file_exists(self, file_path: Path) -> bool:
         return file_path.exists() and file_path.is_file()
 
-    def test_ValidConstructionWorkspace_GenerateConstructionReadme_ReadmeGenerated(self, caplog, workspace):
+    def test_ValidSourceFiles_AddExportJobsInMultipleFormats_ImagesExported(self, caplog, workspace):
         freecad_exporter = FreecadExporter()
         freecad_exporter.add_export_job(workspace / "src/example_part_a.FCStd")
         freecad_exporter.add_export_job(workspace / "src/example_part_b.FCStd", workspace / "output_b/")
