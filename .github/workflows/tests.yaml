@@ -22,6 +22,6 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
       - run: sudo apt-get update && sudo apt-get install xvfb
-      - run: sudo snap freecad
+      - run: sudo snap install freecad
       - run: pip install -r requirements.txt
       - run: tox
