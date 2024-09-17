@@ -4,7 +4,7 @@
 <table>
   <tr>
     <th>Construction</th>
-    <th>Preview</th>
+    <th style="width:50%">>Preview</th>
   </tr>
 {%- for construction in workspace.constructions %}
   <tr>
@@ -19,7 +19,11 @@
         </ul>
     </td>
     <td>
-        <a href="{{ construction.construction_relative_dir_path }}/{{ construction.filepath_thumbnail_image }}"><img src="{{ construction.construction_relative_dir_path }}/{{ construction.filepath_thumbnail_image }}" alt="{{ construction.construction_relative_dir_path }}/{{ construction.filepath_thumbnail_image }}" width="400"/></a>
+    {% if construction.filepath_thumbnail_image -%}
+        <a href="{{ construction.construction_relative_dir_path }}/README.md"><img src="{{ construction.construction_relative_dir_path }}/{{ construction.filepath_thumbnail_image }}" alt="{{ construction.construction_relative_dir_path }}/{{ construction.filepath_thumbnail_image }}" width="400"/></a>
+    {% else -%}
+        <a href="{{ construction.construction_relative_dir_path }}/README.md"><img src=".resources/img/no_image_available.png" alt="no image available" width="400"/></a>
+    {% endif -%}
     </td>
   </tr>
 {%- endfor %}

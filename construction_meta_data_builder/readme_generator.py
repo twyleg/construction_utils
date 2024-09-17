@@ -127,6 +127,17 @@ class WorkspaceReadmeGenerator(ReadmeGenerator):
     def __init__(self, workspace: Workspace):
         super().__init__(workspace.workspace_dir_path, FILE_DIR / "resources/templates/template_workspace_readme.md.jinja",
                          workspace=workspace)
+        self.__create_generic_images(workspace.workspace_dir_path)
+
+    @staticmethod
+    def __create_generic_images(workspace_dir_path: Path) -> None:
+        generic_img_dir_path = workspace_dir_path / ".resources/img"
+        generic_img_dir_path.mkdir(parents=True, exist_ok=True)
+
+        no_image_available_file_path_src = FILE_DIR / "resources/img/no_image_available.png"
+        no_image_available_file_path_dst = generic_img_dir_path / "no_image_available.png"
+        if not no_image_available_file_path_dst.exists():
+            shutil.copy(no_image_available_file_path_src, no_image_available_file_path_dst)
 
 
 class ConstructionReadmeGenerator(ReadmeGenerator):

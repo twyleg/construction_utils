@@ -8,3 +8,4 @@ include construction_meta_data_builder/py.typed
 include construction_meta_data_builder/_version.py
 include construction_meta_data_builder/resources/scripts/*.py
 include construction_meta_data_builder/resources/templates/*.jinja
+include construction_meta_data_builder/resources/img/*
