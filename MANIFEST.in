@@ -1,11 +1,11 @@
 include README.md
 include LICENSE
 include requirements.txt
-graft construction_meta_data_builder
+graft construction_utils
 recursive-exclude * *.py[co]
 include versioneer.py
-include construction_meta_data_builder/py.typed
-include construction_meta_data_builder/_version.py
-include construction_meta_data_builder/resources/scripts/*.py
-include construction_meta_data_builder/resources/templates/*.jinja
-include construction_meta_data_builder/resources/img/*
+include construction_utils/py.typed
+include construction_utils/_version.py
+include construction_utils/resources/scripts/*.py
+include construction_utils/resources/templates/*.jinja
+include construction_utils/resources/img/*

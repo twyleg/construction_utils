@@ -6,7 +6,7 @@ import pytest
 import logging
 from pathlib import Path
 
-from construction_meta_data_builder.readme_generator import Construction, Workspace, ConstructionReadmeGenerator, WorkspaceReadmeGenerator
+from construction_utils.readme_generator import Construction, Workspace, ConstructionReadmeGenerator, WorkspaceReadmeGenerator
 
 #
 # General naming convention for unit tests:

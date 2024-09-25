@@ -6,7 +6,7 @@ import pytest
 import logging
 from pathlib import Path
 
-from construction_meta_data_builder.freecad_exporter import FreecadExporter
+from construction_utils.freecad_exporter import FreecadExporter
 
 
 FILE_DIR = Path(__file__).parent

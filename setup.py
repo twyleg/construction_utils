@@ -14,15 +14,15 @@ def read_long_description() -> str:
 
 # fmt: off
 setup(
-    name="construction_meta_data_builder",
+    name="construction_utils",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     author="Torsten Wylegala",
     author_email="mail@twyleg.de",
-    description="README file generator for FreeCAD construction workspaces.",
+    description="Utilities for FreeCAD construction workspaces.",
     license="GPL 3.0",
-    keywords="FreeCAD Export Constructions Generator",
-    url="https://github.com/twyleg/construction_meta_data_builder",
+    keywords="FreeCAD Export Constructions Generator Utilities",
+    url="https://github.com/twyleg/construction_utils",
     packages=find_packages(),
     long_description=read_long_description(),
     long_description_content_type="text/markdown",
@@ -33,7 +33,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "construction_meta_data_builder = construction_meta_data_builder.main:main",
+            "construction_utils = construction_utils.main:main",
         ]
     },
 )

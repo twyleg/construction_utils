@@ -2,14 +2,13 @@
 import json
 import logging
 import shutil
-import subprocess
 from pathlib import Path
 from glob import glob
 from typing import List, Dict, Any, Tuple
 from os import listdir
 from jinja2 import FileSystemLoader, Environment
 
-from construction_meta_data_builder.freecad_exporter import FreecadExporter
+from construction_utils.freecad_exporter import FreecadExporter
 
 FILE_DIR = Path(__file__).parent
 
