@@ -52,6 +52,7 @@ class TestProjectCreator:
             "resources/.gitignore",
             "resources/origins.csv",
             "construction.json",
+
         ]
 
         for expected_file in expected_files:
