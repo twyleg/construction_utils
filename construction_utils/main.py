@@ -2,16 +2,17 @@
 import argparse
 
 from pathlib import Path
-from simple_python_app.generic_application import GenericApplication
+from simple_python_app.subcommand_application import SubcommandApplication
 
 from construction_utils import __version__
 from construction_utils.readme_generator import generate_readmes_for_workspace
+from construction_utils.project_creator import create_project
 
 
 FILE_DIR = Path(__file__).parent
 
 
-class Application(GenericApplication):
+class Application(SubcommandApplication):
 
     def __init__(self):
         # fmt: off
@@ -24,10 +25,34 @@ class Application(GenericApplication):
         # fmt: on
 
     def add_arguments(self, argparser: argparse.ArgumentParser):
-        pass
+        # fmt: off
+        generate_docs_command = self.add_subcommand(
+            command="generate_docs",
+            help="Generate documentation (READMEs) for for this workspace.",
+            description="Generate documentation (READMEs) for for this workspace.",
+            handler=self.handle_generate_docs
+        )
+        create_project_command = self.add_subcommand(
+            command="create_project",
+            help="Create a new project with default file structure.",
+            description="Create a new project with default file structure.",
+            handler=self.handle_create_project
+        )
 
-    def run(self, args: argparse.Namespace):
+        create_project_command.parser.add_argument(
+            "project_name",
+            type=str,
+            help="Name of the project",
+        )
+        # fmt: on
+
+    def handle_generate_docs(self, args: argparse.Namespace) -> int:
         generate_readmes_for_workspace(Path.cwd())
+        return 0
+
+    def handle_create_project(self, args: argparse.Namespace) -> int:
+        create_project(Path.cwd(), args.project_name)
+        return 0
 
 
 def main() -> None:
