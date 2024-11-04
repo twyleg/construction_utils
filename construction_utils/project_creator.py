@@ -11,6 +11,7 @@ logm = logging.getLogger(__name__)
 
 
 def __create_subdirs(project_dir_path: Path) -> None:
+    # fmt: off
     dir_names_to_create = [
         "source",
         "3d",
@@ -18,6 +19,7 @@ def __create_subdirs(project_dir_path: Path) -> None:
         "img",
         "gcode"
     ]
+    # fmt: on
 
     logm.debug("Creating project subdirs/files:")
 
@@ -34,7 +36,7 @@ def __create_subdirs(project_dir_path: Path) -> None:
 def __create_resource_origins_file(project_dir_path: Path) -> None:
     src_file = FILE_DIR / "resources/templates/origins.csv"
     dst_file = project_dir_path / "resources/origins.csv"
-    logm.debug("Copying origins.csv template to \"%s\"", dst_file)
+    logm.debug('Copying origins.csv template to "%s"', dst_file)
     shutil.copy(src_file, dst_file)
 
 
@@ -52,10 +54,10 @@ def __create_construction_file(project_dir_path: Path, project_name: str) -> Non
 def create_project(root_dir_path: Path, project_name: str) -> None:
     project_dir_path = root_dir_path / project_name
 
-    logm.info("Creating project: name=\"%s\", workspace=\"%s\"", project_name, root_dir_path)
-    
+    logm.info('Creating project: name="%s", workspace="%s"', project_name, root_dir_path)
+
     if project_dir_path.exists():
-        logm.warning("Destination project directory (\"%s\") already existing. Abort!", project_dir_path.absolute())
+        logm.warning('Destination project directory ("%s") already existing. Abort!', project_dir_path.absolute())
         return
 
     logm.debug("Creating project dir: %s", project_dir_path)
