@@ -28,7 +28,7 @@ setup(
     long_description_content_type="text/markdown",
     include_package_data=True,
     install_requires=[
-        "simple-python-app",
+        "simple-python-app~=0.4.0",
         "jinja2~=3.1.4"
     ],
     entry_points={

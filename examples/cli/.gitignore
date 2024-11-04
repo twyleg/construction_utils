@@ -1,0 +1,5 @@
+test_workspace/
+stdout/
+.logs/
+.resources/
+venv/
